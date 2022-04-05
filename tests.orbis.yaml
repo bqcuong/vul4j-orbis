@@ -1,0 +1,10 @@
+path: ""
+generator: 
+  script: ""
+  path: ""
+cwd: ""
+script: ""
+cases:
+  t1:
+    order: 1
+    file: GEN_000.xml

@@ -1,0 +1,9 @@
+VUL4J-6:
+  cwd: ""
+  script: ""
+  path: ""
+  args: ""
+  cases:
+    pov_1:
+      order: 1
+      file: "org.apache.commons.compress.Test_CVE_2018_1324#testCVE_2018_1324"
