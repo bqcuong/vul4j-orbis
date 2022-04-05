@@ -7,8 +7,7 @@ ENV LANG=C.UTF-8
 RUN apt update \
     && apt install -y wget curl git python3 python3-pip vim zsh unzip bzip2 xz-utils \
     openjdk-8-jdk maven \
-    openssh-client patch software-properties-common time build-essential \
-    && rm -rf /var/lib/apt/lists/*
+    openssh-client patch build-essential
 
 RUN wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh || true
 
