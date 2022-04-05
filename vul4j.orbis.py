@@ -21,11 +21,15 @@ class VUL4J(JavaBenchmark):
     class Meta:
         label = 'vul4j'
 
-    def set(self, **kwargs):
+    def set(self, project: Project):
         """Sets the env variables for the operations."""
-        self.env["MAVEN_HOME"] = self.get_config("maven_home")
-        self.env["JAVA_HOME"] = self.get_config("java8_home")
-        self.env["PATH"] += ":" + self.get_config("maven_home") + "/bin"
+        self.env["MAVEN_HOME"] = project.packages.get('maven_home')
+        self.env["PATH"] += ":" + self.env["MAVEN_HOME"] + "/bin"
+
+        if project.build.version == '7':
+            self.env["JAVA_HOME"] = project.packages.get('java7_home')
+        else:
+            self.env["JAVA_HOME"] = project.packages.get('java8_home')
 
     def checkout(self, vid: str, handler: CheckoutHandler, working_dir: str = None,
                  root_dir: str = None, **kwargs) -> Dict[str, Any]:
