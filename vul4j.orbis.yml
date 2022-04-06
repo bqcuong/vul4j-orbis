@@ -31,7 +31,7 @@ vul4j:
             - "Loop with Unreachable Exit Condition ('Infinite Loop')"
           locs:
             "src/main/java/org/apache/commons/compress/archivers/zip/X0017_StrongEncryptionHeader.java":
-              - 313
+              313: 313
           build:
             system: "Maven"
             version: "7"
