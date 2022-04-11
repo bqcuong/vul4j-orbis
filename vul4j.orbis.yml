@@ -21,7 +21,7 @@ vul4j:
         java8_home: "/usr/lib/jvm/java-8-openjdk-amd64"
         maven_home: "/usr/share/maven"
       manifest:
-        dcb0486fb4cb2b6592c04d6ec2edbd3f690df5f2:
+        ae85b79b04f361b977dc71d5cd306128212c62cf:
           id: VUL4J-6
           cwe: 20
           cve: CVE-2018-1324
@@ -37,4 +37,4 @@ vul4j:
             version: "7"
             args: ""
       patches:
-        dcb0486fb4cb2b6592c04d6ec2edbd3f690df5f2: 2a2f1dc48e22a34ddb72321a4db211da91aa933b
+        ae85b79b04f361b977dc71d5cd306128212c62cf: 2a2f1dc48e22a34ddb72321a4db211da91aa933b
