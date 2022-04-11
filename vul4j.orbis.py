@@ -8,9 +8,6 @@ from orbis.data.results import CommandData
 from orbis.data.schema import Oracle, Project
 from orbis.ext.database import TestOutcome
 from orbis.handlers.benchmark.java_benchmark import JavaBenchmark
-from orbis.handlers.operations.checkout import CheckoutHandler
-from orbis.handlers.operations.java.build import JavaBuildHandler
-from orbis.handlers.operations.java.test import JavaTestHandler
 
 
 class VUL4J(JavaBenchmark):
@@ -31,19 +28,18 @@ class VUL4J(JavaBenchmark):
         else:
             self.env["JAVA_HOME"] = project.packages.get('java8_home')
 
-    def checkout(self, vid: str, handler: CheckoutHandler, working_dir: str = None,
-                 root_dir: str = None, **kwargs) -> Dict[str, Any]:
+    def checkout(self, vid: str, working_dir: str = None, root_dir: str = None, **kwargs) -> Dict[str, Any]:
 
         project = self.get_by_vid(vid)
         manifest = project.get_manifest(vid)
         corpus_path = Path(self.get_config('corpus'))  # benchmark repository path
 
-        iid, working_dir = handler(project, manifest=manifest, corpus_path=corpus_path,
+        iid, working_dir = self.checkout_handler(project, manifest=manifest, corpus_path=corpus_path,
                                    working_dir=working_dir, root_dir=root_dir)
 
         return {'iid': iid, 'working_dir': str(working_dir.resolve())}
 
-    def build(self, context: Context, handler: JavaBuildHandler, **kwargs) -> Tuple[CommandData, Path]:
+    def build(self, context: Context, **kwargs) -> Tuple[CommandData, Path]:
         build_handler = self.app.handler.get('handlers', 'java_build', setup=True)
         manifest = context.project.get_version(sha=context.instance.sha)
 
@@ -55,8 +51,7 @@ class VUL4J(JavaBenchmark):
             cmd_data = CommandData(args="")
         return cmd_data, Path(context.root)
 
-    def test(self, context: Context, handler: JavaTestHandler, tests: Oracle, timeout: int,
-             **kwargs) -> List[TestOutcome]:
+    def test(self, context: Context, tests: Oracle, timeout: int, **kwargs) -> List[TestOutcome]:
         test_handler = self.app.handler.get('handlers', 'java_test', setup=True)
         manifest = context.project.get_version(sha=context.instance.sha)
 
