@@ -5,8 +5,8 @@ vul4j:
     margin: 15
   dataset:
     bqcuong/vul4j-orbis:
-      name: vul4j
-      id: vul4j
+      name: vul4j-orbis
+      id: vul4j-orbis
       build:
         system: "Maven"
         version: "7"
