@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import List, Dict, Any, Tuple
+from typing import List, Dict, Any, AnyStr
 
 from cement import Handler
 
@@ -28,6 +28,17 @@ class VUL4J(JavaBenchmark):
         else:
             self.env["JAVA_HOME"] = project.packages.get('java8_home')
 
+    def classpath(self, context: Context) -> AnyStr:
+        maven_local_repo = str(context.root.resolve()) + "/.m2/repository"
+        self.env["MVN_OPTS"] = "-Dmaven.repo.local=" + maven_local_repo  # MVN_OPTS env works for only vul4j
+
+        manifest = context.project.get_version(sha=context.instance.sha)
+        checkout_dir = context.root.resolve() / context.project.name
+        cmd_data = CommandData(args=f"vul4j classpath -d {checkout_dir}", cwd=str(context.root.resolve() / context.project.name), env=self.env)
+        super().__call__(cmd_data=cmd_data, msg=f"Getting classpath of {manifest.vuln.id}\n", raise_err=True)
+        res = cmd_data.output[2:][:-2]
+        return res
+
     def checkout(self, vid: str, working_dir: str = None, root_dir: str = None, **kwargs) -> Dict[str, Any]:
 
         project = self.get_by_vid(vid)
@@ -35,7 +46,13 @@ class VUL4J(JavaBenchmark):
         corpus_path = Path(self.get_config('corpus'))  # benchmark repository path
 
         iid, working_dir = self.checkout_handler(project, manifest=manifest, corpus_path=corpus_path,
-                                   working_dir=working_dir, root_dir=root_dir)
+                                                 working_dir=working_dir, root_dir=root_dir)
+
+        # save extra json file containing information about the vulnerability (for only vul4j)
+        checkout_dir = working_dir.resolve() / project.name
+        info_folder = checkout_dir / "VUL4J"
+        cmd_data = CommandData(args=f"mkdir {info_folder}; vul4j info -i {manifest.vuln.id} > {info_folder}/vulnerability_info.json", cwd="/", env=self.env)
+        super().__call__(cmd_data=cmd_data, msg=f"Saving information of {manifest.vuln.id}\n", raise_err=True)
 
         return {'iid': iid, 'working_dir': str(working_dir.resolve())}
 

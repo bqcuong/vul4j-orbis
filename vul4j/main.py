@@ -274,7 +274,7 @@ export MAVEN_OPTS="%s";
         cp = self.get_classpath(output_dir)
         if print_out:
             print(cp)
-        return cp
+        exit(0)
 
     def get_classpath(self, output_dir):
         vul = self.read_vulnerability_from_output_dir(output_dir)

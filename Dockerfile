@@ -18,8 +18,7 @@ WORKDIR /vul4j
 RUN python3 setup.py install
 
 # jdk7 downloaded from https://www.oracle.com/java/technologies/javase/javase7-archive-downloads.html
-COPY jdk-7u80-linux-x64.tar.gz /tmp/jdk-7u80-linux-x64.tar.gz
-RUN tar xvzf /tmp/jdk-7u80-linux-x64.tar.gz -C /tmp/
+RUN tar xvzf /vul4j/jdk-7u80-linux-x64.tar.gz -C /tmp/
 RUN mv /tmp/jdk1.7.0_80 /usr/lib/jvm/jdk1.7.0_80/
 RUN rm jdk-7u80-linux-x64.tar.gz
 
