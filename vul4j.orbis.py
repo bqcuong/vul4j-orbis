@@ -39,7 +39,7 @@ class VUL4J(JavaBenchmark):
 
         return {'iid': iid, 'working_dir': str(working_dir.resolve())}
 
-    def build(self, context: Context, **kwargs) -> Tuple[CommandData, Path]:
+    def build(self, context: Context, **kwargs) -> CommandData:
         build_handler = self.app.handler.get('handlers', 'java_build', setup=True)
         manifest = context.project.get_version(sha=context.instance.sha)
 
@@ -49,20 +49,21 @@ class VUL4J(JavaBenchmark):
             cmd_data = build_handler.build_gradle(context, self.env)
         else:
             cmd_data = CommandData(args="")
-        return cmd_data, Path(context.root)
+        return cmd_data
 
     def test(self, context: Context, tests: Oracle, timeout: int, **kwargs) -> List[TestOutcome]:
         test_handler = self.app.handler.get('handlers', 'java_test', setup=True)
         manifest = context.project.get_version(sha=context.instance.sha)
 
         test_outcomes = []
+
         for name, test in tests.cases.items():
             if manifest.vuln.build.system == "Maven":
-                cmd_data, outcome = test_handler.test_maven(context, manifest.vuln.build, test, self.env)
-                test_outcomes.append(outcome.to_dict())
+                cmd_data, outcome = test_handler.test_maven(context, test, self.env)
+                test_outcomes.append(outcome)
             elif manifest.vuln.build.system == "Gradle":
-                cmd_data, outcome = test_handler.test_gradle(context, manifest.vuln.build, test, self.env)
-                test_outcomes.append(outcome.to_dict())
+                cmd_data, outcome = test_handler.test_gradle(context, test, self.env)
+                test_outcomes.append(outcome)
 
         return test_outcomes
 
