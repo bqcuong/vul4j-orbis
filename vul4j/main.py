@@ -308,12 +308,14 @@ export MAVEN_OPTS="%s";
             cp_cmd = "%s;%s" % (gradle_classpath_cmd, cat_classpath_info_cmd)
 
         elif vul['build_system'] == "Maven":
+            cmd_options = vul['cmd_options']
             failing_module = vul['failing_module']
             if failing_module != "root" and failing_module != "":
-                cp_cmd = "mvn dependency:build-classpath -Dmdep.outputFile='classpath.info' -pl %s; cat %s/classpath.info" \
-                         % (failing_module, failing_module)
+                cp_cmd = "mvn dependency:build-classpath -Dmdep.outputFile='classpath.info' -pl %s %s; cat %s/classpath.info" \
+                         % (failing_module, cmd_options, failing_module)
             else:
-                cp_cmd = "mvn dependency:build-classpath -Dmdep.outputFile='classpath.info'; cat classpath.info"
+                cp_cmd = "mvn dependency:build-classpath -Dmdep.outputFile='classpath.info' %s; cat classpath.info" \
+                         % (cmd_options)
 
         else:
             print("Not support for %s" % vul['vul_id'])
