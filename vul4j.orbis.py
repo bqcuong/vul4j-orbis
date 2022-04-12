@@ -62,8 +62,10 @@ class VUL4J(JavaBenchmark):
 
         if manifest.vuln.build.system == "Maven":
             cmd_data = build_handler.build_maven(context, self.env)
+            cmd_data['build'] = str(context.root.resolve() / context.project.name / 'target')
         elif manifest.vuln.build.system == "Gradle":
             cmd_data = build_handler.build_gradle(context, self.env)
+            cmd_data['build'] = str(context.root.resolve() / context.project.name / 'build')
         else:
             cmd_data = CommandData(args="")
         return cmd_data
