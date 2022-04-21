@@ -60,6 +60,7 @@ class Vul4J:
                 compliance_level = int(row['compliance_level'].strip())
                 compile_cmd = row['compile_cmd'].strip()
                 test_all_cmd = row['test_all_cmd'].strip()
+                test_cmd = row['test_cmd'].strip()
                 cmd_options = row['cmd_options'].strip()
                 failing_module = row['failing_module'].strip()
                 src_classes_dir = row['src_classes'].strip()
@@ -80,6 +81,7 @@ class Vul4J:
                     "compliance_level": compliance_level,
                     "compile_cmd": compile_cmd,
                     "test_all_cmd": test_all_cmd,
+                    "test_cmd": test_cmd,
                     "cmd_options": cmd_options,
                     "failing_module": failing_module,
                     "src_classes_dir": src_classes_dir,
