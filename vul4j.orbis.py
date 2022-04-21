@@ -86,6 +86,16 @@ class VUL4J(JavaBenchmark):
 
         return test_outcomes
 
+    def test_batch(self, context: Context, batch_type: str, timeout: int, **kwargs) -> CommandData:
+        maven_local_repo = str(context.root.resolve()) + "/.m2/repository"
+        self.env["MVN_OPTS"] = "-Dmaven.repo.local=" + maven_local_repo  # MVN_OPTS env works for only vul4j
+
+        manifest = context.project.get_version(sha=context.instance.sha)
+        checkout_dir = context.root.resolve() / context.project.name
+        cmd_data = CommandData(args=f"vul4j test -d {checkout_dir} -b {batch_type}", cwd=str(context.root.resolve() / context.project.name), env=self.env)
+        super().__call__(cmd_data=cmd_data, msg=f"Testing the {batch_type} of {manifest.vuln.id}\n", raise_err=True)
+        return cmd_data
+
     def make(self, context: Context, handler: Handler, **kwargs) -> CommandData:
         pass
 

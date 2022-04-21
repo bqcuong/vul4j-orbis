@@ -238,16 +238,20 @@ export MAVEN_OPTS="%s";
             f.write("1" if ret == 0 else "0")
         return ret
 
-    def test(self, output_dir, print_out=True):
+    def test(self, output_dir, batch_type, print_out=True):
         vul = self.read_vulnerability_from_output_dir(output_dir)
 
         java_home = JAVA7_HOME if vul['compliance_level'] <= 7 else JAVA8_HOME
+        if batch_type == "all":
+            cmd_type = 'test_all_cmd'
+        else:
+            cmd_type = 'test_cmd'
 
         cmd = """cd %s;
 export JAVA_HOME="%s";
 export _JAVA_OPTIONS=-Djdk.net.URLClassPath.disableClassPathURLCheck=true;
 export MAVEN_OPTS="%s";
-%s;""" % (output_dir, java_home, MVN_OPTS, vul['test_all_cmd'])
+%s;""" % (output_dir, java_home, MVN_OPTS, vul[cmd_type])
 
         cmd_options = vul['cmd_options']
         if cmd_options:
@@ -515,7 +519,7 @@ def main_reproduce(args):
                 continue
 
             logging.debug("Running tests...")
-            test_results_str = vul4j.test(WORK_DIR, print_out=False)
+            test_results_str = vul4j.test(WORK_DIR, "all", print_out=False)
             write_test_results_to_file(vul, test_results_str, 'vulnerable')
             test_results = json.loads(test_results_str)
 
@@ -542,7 +546,7 @@ def main_reproduce(args):
                 continue
 
             logging.debug("Running tests...")
-            test_results_str = vul4j.test(WORK_DIR, print_out=False)
+            test_results_str = vul4j.test(WORK_DIR, "all", print_out=False)
             write_test_results_to_file(vul, test_results_str, 'patched')
             test_results = json.loads(test_results_str)
 
@@ -579,7 +583,7 @@ def main_compile(args):
 
 def main_test(args):
     vul4j = Vul4J()
-    vul4j.test(args.outdir)
+    vul4j.test(args.outdir, args.batchtype)
 
 
 def main_classpath(args):
@@ -616,6 +620,8 @@ def main(args=None):
     test_parser.add_argument("-i", "--id", help="Vulnerability Id.", required=False)
     test_parser.add_argument("-d", "--outdir", help="The directory to which the vulnerability was checked out.",
                              required=True)
+    test_parser.add_argument("-b", "--batchtype", help="Two modes: all tests (all) by default, and only povs (povs).",
+                             default="all", required=False)
 
     cp_parser = sub_parsers.add_parser('classpath', help="Print the classpath of the checked out vulnerability.")
     cp_parser.set_defaults(func=main_classpath)
