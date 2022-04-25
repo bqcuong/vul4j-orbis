@@ -148,6 +148,9 @@ class Vul4J:
             print("Directory '%s' has already existed!" % output_dir)
             exit(1)
 
+        os.makedirs(os.path.join(output_dir, OUTPUT_FOLDER_NAME))
+        copytree(os.path.join(BENCHMARK_PATH, "/perfectfl/", vul_id), os.path.join(output_dir, OUTPUT_FOLDER_NAME))
+
         cmd = "cd %s; git reset .; git checkout -- .; git clean -x -d --force; git checkout -f %s" % (
             BENCHMARK_PATH, vul["vul_id"])
         ret = subprocess.call(cmd, shell=True, stdout=FNULL, stderr=subprocess.STDOUT)
@@ -156,8 +159,6 @@ class Vul4J:
 
         # copy to working directory
         copytree(BENCHMARK_PATH, output_dir, ignore=ignore_patterns('.git'))
-        os.makedirs(os.path.join(output_dir, OUTPUT_FOLDER_NAME))
-        copytree(os.path.join(BENCHMARK_PATH, "/perfectfl/", vul_id), os.path.join(output_dir, OUTPUT_FOLDER_NAME))
         with open(os.path.join(output_dir, OUTPUT_FOLDER_NAME, "vulnerability_info.json"), "w", encoding='utf-8') as f:
             f.write(json.dumps(vul, indent=2))
 
