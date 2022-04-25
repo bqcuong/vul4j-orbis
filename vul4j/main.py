@@ -12,7 +12,7 @@ from xml.etree.ElementTree import parse
 from unidiff import PatchSet
 
 from vul4j.config import JAVA7_HOME, MVN_OPTS, JAVA8_HOME, OUTPUT_FOLDER_NAME, ENABLE_EXECUTING_LOGS, DATASET_PATH, \
-    BENCHMARK_PATH, PROJECT_REPOS_ROOT_PATH, REPRODUCTION_DIR, VUL4J_ROOT
+    BENCHMARK_PATH, PROJECT_REPOS_ROOT_PATH, REPRODUCTION_DIR
 
 FNULL = open(os.devnull, 'w')
 root = logging.getLogger()
@@ -157,7 +157,7 @@ class Vul4J:
         # copy to working directory
         copytree(BENCHMARK_PATH, output_dir, ignore=ignore_patterns('.git'))
         os.makedirs(os.path.join(output_dir, OUTPUT_FOLDER_NAME))
-        copytree(os.path.join(VUL4J_ROOT, "/perfectfl/", vul_id), os.path.join(output_dir, OUTPUT_FOLDER_NAME))
+        copytree(os.path.join(BENCHMARK_PATH, "/perfectfl/", vul_id), os.path.join(output_dir, OUTPUT_FOLDER_NAME))
         with open(os.path.join(output_dir, OUTPUT_FOLDER_NAME, "vulnerability_info.json"), "w", encoding='utf-8') as f:
             f.write(json.dumps(vul, indent=2))
 
