@@ -1,0 +1,4 @@
+org.primeframework.jwt.JWTDecoder#fun:154,1.0
+org.primeframework.jwt.JWTDecoder#fun:156,1.0
+org.primeframework.jwt.JWTDecoder#fun:166,1.0
+org.primeframework.jwt.JWTDecoder#fun:168,1.0

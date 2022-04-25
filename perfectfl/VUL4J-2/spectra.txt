@@ -1,0 +1,2 @@
+org.apache.batik.dom.util.SAXDocumentFactory#fun:405,1.0
+org.apache.batik.dom.util.SAXDocumentFactory#fun:450,1.0

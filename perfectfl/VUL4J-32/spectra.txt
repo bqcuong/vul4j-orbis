@@ -1,0 +1,2 @@
+com.opensymphony.xwork2.security.DefaultExcludedPatternsChecker#fun:19,1.0
+com.opensymphony.xwork2.security.DefaultExcludedPatternsChecker#fun:20,1.0

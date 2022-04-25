@@ -1,0 +1,2 @@
+org.springframework.security.authentication.encoding.PlaintextPasswordEncoder#fun:53,1.0
+org.springframework.security.authentication.encoding.PlaintextPasswordEncoder#fun:54,1.0

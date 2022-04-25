@@ -1,0 +1,3 @@
+org.apache.commons.compress.archivers.zip.NioZipEncoding#fun:112,1.0
+org.apache.commons.compress.archivers.zip.NioZipEncoding#fun:114,1.0
+org.apache.commons.compress.archivers.zip.NioZipEncoding#fun:115,1.0

@@ -1,0 +1,8 @@
+org.zeroturnaround.zip.ZipUtil#fun:1152,1.0
+org.zeroturnaround.zip.ZipUtil#fun:1153,1.0
+org.zeroturnaround.zip.ZipUtil#fun:1220,1.0
+org.zeroturnaround.zip.ZipUtil#fun:1221,1.0
+org.zeroturnaround.zip.ZipUtil#fun:1225,1.0
+org.zeroturnaround.zip.ZipUtil#fun:1226,1.0
+org.zeroturnaround.zip.ZipUtil#fun:1260,1.0
+org.zeroturnaround.zip.ZipUtil#fun:1261,1.0

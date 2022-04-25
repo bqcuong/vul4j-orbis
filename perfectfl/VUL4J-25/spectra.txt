@@ -1,0 +1,3 @@
+org.apache.sling.xss.impl.XSSAPIImpl#fun:237,1.0
+org.apache.sling.xss.impl.XSSAPIImpl#fun:232,1.0
+org.apache.sling.xss.impl.XSSAPIImpl#fun:241,1.0
