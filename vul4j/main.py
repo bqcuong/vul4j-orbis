@@ -149,7 +149,7 @@ class Vul4J:
             exit(1)
 
         os.makedirs(os.path.join(output_dir, OUTPUT_FOLDER_NAME))
-        copytree(os.path.join(BENCHMARK_PATH, "/perfectfl/", vul_id), os.path.join(output_dir, OUTPUT_FOLDER_NAME))
+        copytree(os.path.join(BENCHMARK_PATH, "perfectfl", vul_id), os.path.join(output_dir, OUTPUT_FOLDER_NAME, vul_id))
 
         cmd = "cd %s; git reset .; git checkout -- .; git clean -x -d --force; git checkout -f %s" % (
             BENCHMARK_PATH, vul["vul_id"])
