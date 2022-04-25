@@ -586,6 +586,7 @@ def main_compile(args):
 def main_test(args):
     vul4j = Vul4J()
     vul4j.test(args.outdir, args.batchtype)
+    exit(0)
 
 
 def main_classpath(args):

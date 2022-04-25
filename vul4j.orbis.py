@@ -8,7 +8,7 @@ from orbis.data.results import CommandData
 from orbis.data.schema import Oracle, Project
 from orbis.ext.database import TestOutcome
 from orbis.handlers.benchmark.java_benchmark import JavaBenchmark
-
+import json
 
 class VUL4J(JavaBenchmark):
     """
@@ -94,6 +94,19 @@ class VUL4J(JavaBenchmark):
         checkout_dir = context.root.resolve() / context.project.name
         cmd_data = CommandData(args=f"vul4j test -d {checkout_dir} -b {batch_type}", cwd=str(context.root.resolve() / context.project.name), env=self.env)
         super().__call__(cmd_data=cmd_data, msg=f"Testing the {batch_type} of {manifest.vuln.id}\n", raise_err=True)
+        test_results = json.loads(cmd_data.output)
+        failures = test_results["tests"]["failures"]
+        passing_tests = test_results["tests"]["passing_tests"]
+        failing_tests = []
+        for failure in failures:
+            test_name = failure["test_class"] + "#" + failure["test_method"]
+            failing_tests.append(test_name)
+
+        forwarded_test_results = {
+            "passing_tests": passing_tests,
+            "failing_tests": failing_tests
+        }
+        cmd_data["test_results"] = forwarded_test_results
         return cmd_data
 
     def make(self, context: Context, handler: Handler, **kwargs) -> CommandData:
