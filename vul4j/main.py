@@ -248,6 +248,7 @@ export MAVEN_OPTS="%s";
 
     def test(self, output_dir, batch_type, print_out=True):
         vul = self.read_vulnerability_from_output_dir(output_dir)
+        self._remove_test_results(output_dir)
 
         java_home = JAVA7_HOME if vul['compliance_level'] <= 7 else JAVA8_HOME
         if batch_type == "all":
@@ -350,6 +351,15 @@ export MAVEN_OPTS="%s";
     '''
     modify from https://github.com/program-repair/RepairThemAll/blob/master/script/info_json_file.py
     '''
+
+    @staticmethod
+    def _remove_test_results(project_dir):
+        for r, dirs, files in os.walk(project_dir):
+            for file in files:
+                filePath = os.path.join(r, file)
+                if ("target/surefire-reports" in filePath or "target/failsafe-reports" in filePath
+                    or "build/test-results" in filePath) and file.endswith('.xml') and file.startswith('TEST-'):
+                    os.remove(filePath)
 
     @staticmethod
     def read_test_results_maven(vul, project_dir):
