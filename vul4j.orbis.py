@@ -45,6 +45,9 @@ class VUL4J(JavaBenchmark):
         manifest = project.get_manifest(vid)
         corpus_path = Path(self.get_config('corpus'))  # benchmark repository path
 
+        cmd_data = CommandData(args=f"cp -r {corpus_path}/perfectfl/{vid} /tmp/fl_{vid}", cwd="/", env=self.env)
+        super().__call__(cmd_data=cmd_data, msg=f"Backup PerfectFL info for {manifest.vuln.id}\n", raise_err=True)
+
         iid, working_dir = self.checkout_handler(project, manifest=manifest, corpus_path=corpus_path,
                                                  working_dir=working_dir, root_dir=root_dir)
 
@@ -53,6 +56,9 @@ class VUL4J(JavaBenchmark):
         info_folder = checkout_dir / "VUL4J"
         cmd_data = CommandData(args=f"mkdir {info_folder}; vul4j info -i {manifest.vuln.id} > {info_folder}/vulnerability_info.json", cwd="/", env=self.env)
         super().__call__(cmd_data=cmd_data, msg=f"Saving information of {manifest.vuln.id}\n", raise_err=True)
+
+        cmd_data = CommandData(args=f"mv /tmp/fl_{vid} {info_folder}/{vid}", cwd="/", env=self.env)
+        super().__call__(cmd_data=cmd_data, msg=f"Saving PerfectFL info for {manifest.vuln.id}\n", raise_err=True)
 
         return {'iid': iid, 'working_dir': str(working_dir.resolve())}
 
