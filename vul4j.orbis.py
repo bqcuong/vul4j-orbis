@@ -113,6 +113,7 @@ class VUL4J(JavaBenchmark):
             "failing_tests": failing_tests
         }
         cmd_data["test_results"] = forwarded_test_results
+        cmd_data["passed"] = len(failing_tests) == 0
         return cmd_data
 
     def make(self, context: Context, handler: Handler, **kwargs) -> CommandData:
