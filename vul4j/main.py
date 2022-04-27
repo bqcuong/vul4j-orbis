@@ -6,7 +6,7 @@ import os
 import re
 import subprocess
 import sys
-from shutil import copytree, ignore_patterns
+from shutil import copytree, ignore_patterns, move
 from xml.etree.ElementTree import parse
 
 from unidiff import PatchSet
@@ -148,8 +148,7 @@ class Vul4J:
             print("Directory '%s' has already existed!" % output_dir)
             exit(1)
 
-        os.makedirs(os.path.join(output_dir, OUTPUT_FOLDER_NAME))
-        copytree(os.path.join(BENCHMARK_PATH, "perfectfl", vul_id), os.path.join(output_dir, OUTPUT_FOLDER_NAME, vul_id))
+        copytree(os.path.join(BENCHMARK_PATH, "perfectfl", vul_id), "/tmp/fl_" + vul_id)
 
         cmd = "cd %s; git reset .; git checkout -- .; git clean -x -d --force; git checkout -f %s" % (
             BENCHMARK_PATH, vul["vul_id"])
@@ -159,8 +158,13 @@ class Vul4J:
 
         # copy to working directory
         copytree(BENCHMARK_PATH, output_dir, ignore=ignore_patterns('.git'))
+
+        os.makedirs(os.path.join(output_dir, OUTPUT_FOLDER_NAME))
         with open(os.path.join(output_dir, OUTPUT_FOLDER_NAME, "vulnerability_info.json"), "w", encoding='utf-8') as f:
             f.write(json.dumps(vul, indent=2))
+
+        # move the perfectfl data to the checked out folder
+        move("/tmp/fl_" + vul_id, os.path.join(output_dir, OUTPUT_FOLDER_NAME, vul_id))
 
         # revert to main branch
         cmd = "cd %s; git reset .; git checkout -- .; git clean -x -d --force; git checkout -f main" % BENCHMARK_PATH
