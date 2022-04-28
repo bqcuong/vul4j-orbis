@@ -74,7 +74,7 @@ vul4j:
           build:
             system: "Maven"
             version: "7"
-            args: "--failing_module tika-parsers"
+            args: ""
         32a8d891bd093f1a176af2ac7cc494ac20a919ab:
           id: VUL4J-36
           cwe: 0
