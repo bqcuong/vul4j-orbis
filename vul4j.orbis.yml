@@ -9,7 +9,7 @@ vul4j:
       id: vul4j-orbis
       build:
         system: "Maven"
-        version: "7"
+        version: "8"
       modules:
         failing_module: "root"
         src_dir: "src/main/java"
@@ -20,7 +20,31 @@ vul4j:
         java7_home: "/usr/lib/jvm/jdk1.7.0_80"
         java8_home: "/usr/lib/jvm/java-8-openjdk-amd64"
         maven_home: "/usr/share/maven"
+      patches:
+        4d430288c66bc8657f046c53740755105a0880c2: 4d430288c66bc8657f046c53740755105a0880c2
+        ae85b79b04f361b977dc71d5cd306128212c62cf: 2a2f1dc48e22a34ddb72321a4db211da91aa933b
+        6dc914c04a884e64bd2bc32a07036ae952aa8bd1: 6dc914c04a884e64bd2bc32a07036ae952aa8bd1
+        32a8d891bd093f1a176af2ac7cc494ac20a919ab: 32a8d891bd093f1a176af2ac7cc494ac20a919ab
+        8dc400cfb4c6ded98537bb04c39041a2880f6710: 8dc400cfb4c6ded98537bb04c39041a2880f6710
+        c5c1286ceb40baa7e0d0e273524b0ac55d35fdf9: c5c1286ceb40baa7e0d0e273524b0ac55d35fdf9
+        ede708d19fc10d0f433801bb8d5d348464f94bc4: ede708d19fc10d0f433801bb8d5d348464f94bc4
+        3f601aa8df1cd0b44d214383f01f66d06380b6bb: 3f601aa8df1cd0b44d214383f01f66d06380b6bb
       manifest:
+        4d430288c66bc8657f046c53740755105a0880c2:
+          id: VUL4J-4
+          cwe: 0
+          cve: CVE
+          related:
+            - 0
+          generic:
+            - ""
+          locs:
+            "java":
+              1: 1
+          build:
+            system: "Maven"
+            version: "8"
+            args: "--failing_module camel-core"
         ae85b79b04f361b977dc71d5cd306128212c62cf:
           id: VUL4J-6
           cwe: 20
@@ -36,5 +60,93 @@ vul4j:
             system: "Maven"
             version: "7"
             args: ""
-      patches:
-        ae85b79b04f361b977dc71d5cd306128212c62cf: 2a2f1dc48e22a34ddb72321a4db211da91aa933b
+        6dc914c04a884e64bd2bc32a07036ae952aa8bd1:
+          id: VUL4J-12
+          cwe: 0
+          cve: CVE
+          related:
+            - 0
+          generic:
+            - ""
+          locs:
+            "java":
+              1: 1
+          build:
+            system: "Maven"
+            version: "7"
+            args: "--failing_module tika-parsers"
+        32a8d891bd093f1a176af2ac7cc494ac20a919ab:
+          id: VUL4J-36
+          cwe: 0
+          cve: CVE
+          related:
+            - 0
+          generic:
+            - ""
+          locs:
+            "java":
+              1: 1
+          build:
+            system: "Maven"
+            version: "8"
+            args: "--failing_module tika-parsers"
+        8dc400cfb4c6ded98537bb04c39041a2880f6710:
+          id: VUL4J-39
+          cwe: 0
+          cve: CVE
+          related:
+            - 0
+          generic:
+            - ""
+          locs:
+            "java":
+              1: 1
+          build:
+            system: "Gradle"
+            version: "8"
+            args: "--failing_module server --src_classes build/classes/main --test_classes build/classes/test"
+        c5c1286ceb40baa7e0d0e273524b0ac55d35fdf9:
+          id: VUL4J-55
+          cwe: 0
+          cve: CVE
+          related:
+            - 0
+          generic:
+            - ""
+          locs:
+            "java":
+              1: 1
+          build:
+            system: "Maven"
+            version: "8"
+            args: "--failing_module core"
+        ede708d19fc10d0f433801bb8d5d348464f94bc4:
+          id: VUL4J-69
+          cwe: 0
+          cve: CVE
+          related:
+            - 0
+          generic:
+            - ""
+          locs:
+            "java":
+              1: 1
+          build:
+            system: "Gradle"
+            version: "8"
+            args: "--failing_module spring-webmvc --src_classes build/classes/main --test_classes build/classes/test"
+        3f601aa8df1cd0b44d214383f01f66d06380b6bb:
+          id: VUL4J-78
+          cwe: 0
+          cve: CVE
+          related:
+            - 0
+          generic:
+            - ""
+          locs:
+            "java":
+              1: 1
+          build:
+            system: "Maven"
+            version: "7"
+            args: "--failing_module xstream --src_dir src/java --test_dir src/test"
