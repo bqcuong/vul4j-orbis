@@ -29,7 +29,8 @@ class VUL4J(JavaBenchmark):
             self.env["JAVA_HOME"] = project.packages.get('java8_home')
 
     def classpath(self, context: Context) -> AnyStr:
-        maven_local_repo = str(context.root.resolve()) + "/.m2/repository"
+        # maven_local_repo = str(context.root.resolve()) + "/.m2/repository"
+        maven_local_repo = "/nexus/.m2/repository"
         self.env["MVN_OPTS"] = "-Dmaven.repo.local=" + maven_local_repo  # MVN_OPTS env works for only vul4j
 
         manifest = context.project.get_version(sha=context.instance.sha)
@@ -93,7 +94,8 @@ class VUL4J(JavaBenchmark):
         return test_outcomes
 
     def test_batch(self, context: Context, batch_type: str, timeout: int, **kwargs) -> CommandData:
-        maven_local_repo = str(context.root.resolve()) + "/.m2/repository"
+        # maven_local_repo = str(context.root.resolve()) + "/.m2/repository"
+        maven_local_repo = "/nexus/.m2/repository"
         self.env["MVN_OPTS"] = "-Dmaven.repo.local=" + maven_local_repo  # MVN_OPTS env works for only vul4j
 
         manifest = context.project.get_version(sha=context.instance.sha)
