@@ -32,6 +32,7 @@ class VUL4J(JavaBenchmark):
         # maven_local_repo = str(context.root.resolve()) + "/.m2/repository"
         maven_local_repo = "/nexus/.m2/repository"
         self.env["MVN_OPTS"] = "-Dmaven.repo.local=" + maven_local_repo  # MVN_OPTS env works for only vul4j
+        self.env["GRADLE_USER_HOME"] = "/nexus/.gradle"
 
         manifest = context.project.get_version(sha=context.instance.sha)
         checkout_dir = context.root.resolve() / context.project.name
@@ -97,6 +98,7 @@ class VUL4J(JavaBenchmark):
         # maven_local_repo = str(context.root.resolve()) + "/.m2/repository"
         maven_local_repo = "/nexus/.m2/repository"
         self.env["MVN_OPTS"] = "-Dmaven.repo.local=" + maven_local_repo  # MVN_OPTS env works for only vul4j
+        self.env["GRADLE_USER_HOME"] = "/nexus/.gradle"
 
         manifest = context.project.get_version(sha=context.instance.sha)
         checkout_dir = context.root.resolve() / context.project.name
