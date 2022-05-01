@@ -65,6 +65,8 @@ class VUL4J(JavaBenchmark):
         return {'iid': iid, 'working_dir': str(working_dir.resolve())}
 
     def build(self, context: Context, **kwargs) -> CommandData:
+        self.env["GRADLE_USER_HOME"] = "/nexus/.gradle"
+
         build_handler = self.app.handler.get('handlers', 'java_build', setup=True)
         manifest = context.project.get_version(sha=context.instance.sha)
 
