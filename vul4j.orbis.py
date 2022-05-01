@@ -75,6 +75,11 @@ class VUL4J(JavaBenchmark):
         cmd_data = CommandData(args=f"vul4j compile -d {checkout_dir}", cwd=str(context.root.resolve() / context.project.name), env=self.env)
         super().__call__(cmd_data=cmd_data, msg=f"Build project of {manifest.vuln.id}\n", raise_err=True)
 
+        if manifest.vuln.build.system == "Maven":
+            cmd_data['build'] = str(context.root.resolve() / context.project.name / 'target')
+        elif manifest.vuln.build.system == "Gradle":
+            cmd_data['build'] = str(context.root.resolve() / context.project.name / 'build')
+
         return cmd_data
 
     def test(self, context: Context, tests: Oracle, timeout: int, **kwargs) -> List[TestOutcome]:
