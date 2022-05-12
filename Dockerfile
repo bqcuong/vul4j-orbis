@@ -1,13 +1,12 @@
-FROM ubuntu:20.04
-
-ENV DEBIAN_FRONTEND=noninteractive
-ENV LANG=C.UTF-8
+FROM bqcuongas/java:latest
 
 # install required softwares
 RUN apt update \
-    && apt install -y wget curl git python3 python3-pip vim zsh unzip bzip2 xz-utils \
-    openjdk-8-jdk maven \
-    openssh-client patch build-essential
+    && apt install -y wget curl vim zsh patch \
+    unzip bzip2 xz-utils \
+    git \
+    python3 python3-pip \
+    maven
 
 RUN wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh || true
 
@@ -17,16 +16,8 @@ WORKDIR /vul4j
 
 RUN python3 setup.py install
 
-# jdk7 downloaded from https://www.oracle.com/java/technologies/javase/javase7-archive-downloads.html
-RUN tar xvzf /vul4j/jdk-7u80-linux-x64.tar.gz -C /tmp/
-RUN mv /tmp/jdk1.7.0_80 /usr/lib/jvm/jdk1.7.0_80/
-RUN rm jdk-7u80-linux-x64.tar.gz
-
 # set env
-ENV JAVA7_HOME /usr/lib/jvm/jdk1.7.0_80
-ENV JAVA8_HOME /usr/lib/jvm/java-8-openjdk-amd64
 ENV BENCHMARK_PATH /vul4j
 ENV DATASET_PATH /vul4j/dataset/vul4j_dataset.csv
 ENV REPRODUCTION_DIR /vul4j/reproduction
 ENV PROJECT_REPOS_ROOT_PATH /vul4j/project_repos
-
