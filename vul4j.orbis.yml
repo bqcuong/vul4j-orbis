@@ -33,21 +33,21 @@ vul4j:
         4d430288c66bc8657f046c53740755105a0880c2:
           id: VUL4J-4
           cwe: 0
-          cve: CVE
+          cve: CVE-2015-0264
           related:
             - 0
           generic:
-            - ""
+            - "XML External Entity Injection"
           locs:
-            "java":
-              1: 1
+            "camel-core/src/main/java/org/apache/camel/builder/xml/XPathBuilder.java":
+              1117: 1117
           build:
             system: "Maven"
             version: "8"
             args: "--failing_module camel-core"
         ae85b79b04f361b977dc71d5cd306128212c62cf:
           id: VUL4J-6
-          cwe: 20
+          cwe: 835
           cve: CVE-2018-1324
           related:
             - 0
@@ -62,90 +62,102 @@ vul4j:
             args: ""
         6dc914c04a884e64bd2bc32a07036ae952aa8bd1:
           id: VUL4J-12
-          cwe: 0
-          cve: CVE
+          cwe: 835
+          cve: CVE-2018-17202
           related:
             - 0
           generic:
-            - ""
+            - "Loop with Unreachable Exit Condition ('Infinite Loop')"
           locs:
-            "java":
-              1: 1
+            "src/main/java/org/apache/commons/imaging/formats/jpeg/decoder/JpegDecoder.java":
+              403: 403
           build:
             system: "Maven"
             version: "7"
             args: ""
         32a8d891bd093f1a176af2ac7cc494ac20a919ab:
           id: VUL4J-36
-          cwe: 0
-          cve: CVE
+          cwe: 835
+          cve: CVE-2018-8017
           related:
             - 0
           generic:
-            - ""
+            - "Loop with Unreachable Exit Condition ('Infinite Loop')"
           locs:
-            "java":
-              1: 1
+            "tika-parsers/src/main/java/org/apache/tika/parser/iptc/IptcAnpaParser.java":
+              466: 466
+              511: 511
+              578: 578
+              677: 677
+              716: 716
+              723: 723
           build:
             system: "Maven"
             version: "8"
             args: "--failing_module tika-parsers"
         8dc400cfb4c6ded98537bb04c39041a2880f6710:
           id: VUL4J-39
-          cwe: 0
-          cve: CVE
+          cwe: 200
+          cve: CVE-2018-1192
           related:
             - 0
           generic:
-            - ""
+            - "Exposure of Sensitive Information to an Unauthorized Actor"
           locs:
-            "java":
-              1: 1
+            "server/src/main/java/org/cloudfoundry/identity/uaa/authentication/UaaAuthenticationDetails.java":
+              116: 116
           build:
             system: "Gradle"
             version: "8"
             args: "--failing_module server --src_classes build/classes/main --test_classes build/classes/test"
         c5c1286ceb40baa7e0d0e273524b0ac55d35fdf9:
           id: VUL4J-55
-          cwe: 0
-          cve: CVE
+          cwe: 835
+          cve: CVE-2018-1000864
           related:
             - 0
           generic:
-            - ""
+            - "Loop with Unreachable Exit Condition ('Infinite Loop')"
           locs:
-            "java":
-              1: 1
+            "core/src/main/java/hudson/scheduler/CronTab.java":
+              358: 358
+              359: 359
           build:
             system: "Maven"
             version: "8"
             args: "--failing_module core"
         ede708d19fc10d0f433801bb8d5d348464f94bc4:
           id: VUL4J-69
-          cwe: 0
-          cve: CVE
+          cwe: 22
+          cve: CVE-2016-9878
           related:
             - 0
           generic:
-            - ""
+            - "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')"
           locs:
-            "java":
-              1: 1
+            "spring-webmvc/src/main/java/org/springframework/web/servlet/ResourceServlet.java":
+              280: 280
           build:
             system: "Gradle"
             version: "8"
             args: "--failing_module spring-webmvc --src_classes build/classes/main --test_classes build/classes/test"
         3f601aa8df1cd0b44d214383f01f66d06380b6bb:
           id: VUL4J-78
-          cwe: 0
-          cve: CVE
+          cwe: 502
+          cve: CVE-2019-10173
           related:
-            - 0
+            - 94
           generic:
-            - ""
+            - "Deserialization of Untrusted Data"
           locs:
-            "java":
-              1: 1
+            "xstream/src/java/com/thoughtworks/xstream/XStream.java":
+              341: 341
+              699: 699
+              714: 714
+              1482: 1482
+              1483: 1483
+              2362: 2362
+              2541: 2541
           build:
             system: "Maven"
             version: "7"
