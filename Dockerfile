@@ -21,3 +21,9 @@ ENV BENCHMARK_PATH /vul4j
 ENV DATASET_PATH /vul4j/dataset/vul4j_dataset.csv
 ENV REPRODUCTION_DIR /vul4j/reproduction
 ENV PROJECT_REPOS_ROOT_PATH /vul4j/project_repos
+
+# pre-install orbis
+ENV ORBIS_PLUGIN_PATH /vul4j
+RUN cd /tmp; git clone https://github.com/epicosy/orbis
+RUN cd /tmp/orbis; ./install.sh
+RUN orbis init
