@@ -35,9 +35,13 @@ class VUL4J(JavaBenchmark):
         self.env["GRADLE_USER_HOME"] = "/nexus/.gradle"
 
         manifest = context.project.get_version(sha=context.instance.sha)
+        for k, v in manifest.vulns.items():
+            vid = k
+            break
+
         checkout_dir = context.root.resolve() / context.project.name
         cmd_data = CommandData(args=f"vul4j classpath -d {checkout_dir}", cwd=str(context.root.resolve() / context.project.name), env=self.env)
-        super().__call__(cmd_data=cmd_data, msg=f"Get classpath of {manifest.vuln.id}\n", raise_err=True)
+        super().__call__(cmd_data=cmd_data, msg=f"Get classpath of {vid}\n", raise_err=True)
         res = cmd_data.output[2:][:-2]
         return res
 
@@ -48,7 +52,7 @@ class VUL4J(JavaBenchmark):
         corpus_path = Path(self.get_config('corpus'))  # benchmark repository path
 
         cmd_data = CommandData(args=f"cp -r {corpus_path}/perfectfl/{vid} /tmp/fl_{vid}", cwd="/", env=self.env)
-        super().__call__(cmd_data=cmd_data, msg=f"Backup PerfectFL info for {manifest.vuln.id}\n", raise_err=True)
+        super().__call__(cmd_data=cmd_data, msg=f"Backup PerfectFL info for {vid}\n", raise_err=True)
 
         iid, working_dir = self.checkout_handler(project, manifest=manifest, corpus_path=corpus_path,
                                                  working_dir=working_dir, root_dir=root_dir)
@@ -56,11 +60,11 @@ class VUL4J(JavaBenchmark):
         # save extra json file containing information about the vulnerability (for only vul4j)
         checkout_dir = working_dir.resolve() / project.name
         info_folder = checkout_dir / "VUL4J"
-        cmd_data = CommandData(args=f"mkdir {info_folder}; vul4j info -i {manifest.vuln.id} > {info_folder}/vulnerability_info.json", cwd="/", env=self.env)
-        super().__call__(cmd_data=cmd_data, msg=f"Saving information of {manifest.vuln.id}\n", raise_err=True)
+        cmd_data = CommandData(args=f"mkdir {info_folder}; vul4j info -i {vid} > {info_folder}/vulnerability_info.json", cwd="/", env=self.env)
+        super().__call__(cmd_data=cmd_data, msg=f"Saving information of {vid}\n", raise_err=True)
 
         cmd_data = CommandData(args=f"mv /tmp/fl_{vid} {info_folder}/{vid}", cwd="/", env=self.env)
-        super().__call__(cmd_data=cmd_data, msg=f"Save PerfectFL info for {manifest.vuln.id}\n", raise_err=True)
+        super().__call__(cmd_data=cmd_data, msg=f"Save PerfectFL info for {vid}\n", raise_err=True)
 
         return {'iid': iid, 'working_dir': str(working_dir.resolve())}
 
@@ -71,13 +75,18 @@ class VUL4J(JavaBenchmark):
         self.env["GRADLE_USER_HOME"] = "/nexus/.gradle"
 
         manifest = context.project.get_version(sha=context.instance.sha)
+        for k, v in manifest.vulns.items():
+            vid = k
+            vuln = v
+            break
+
         checkout_dir = context.root.resolve() / context.project.name
         cmd_data = CommandData(args=f"vul4j compile -d {checkout_dir}", cwd=str(context.root.resolve() / context.project.name), env=self.env)
-        super().__call__(cmd_data=cmd_data, msg=f"Build project of {manifest.vuln.id}\n", raise_err=True)
+        super().__call__(cmd_data=cmd_data, msg=f"Build project of {vid}\n", raise_err=True)
 
-        if manifest.vuln.build.system == "Maven":
+        if vuln.build.system == "Maven":
             cmd_data['build'] = str(context.root.resolve() / context.project.name / 'target')
-        elif manifest.vuln.build.system == "Gradle":
+        elif vuln.build.system == "Gradle":
             cmd_data['build'] = str(context.root.resolve() / context.project.name / 'build')
 
         return cmd_data
@@ -85,14 +94,17 @@ class VUL4J(JavaBenchmark):
     def test(self, context: Context, tests: Oracle, timeout: int, **kwargs) -> List[TestOutcome]:
         test_handler = self.app.handler.get('handlers', 'java_test', setup=True)
         manifest = context.project.get_version(sha=context.instance.sha)
+        for k, v in manifest.vulns.items():
+            vuln = v
+            break
 
         test_outcomes = []
 
         for name, test in tests.cases.items():
-            if manifest.vuln.build.system == "Maven":
+            if vuln.build.system == "Maven":
                 cmd_data, outcome = test_handler.test_maven(context, test, self.env)
                 test_outcomes.append(outcome)
-            elif manifest.vuln.build.system == "Gradle":
+            elif vuln.build.system == "Gradle":
                 cmd_data, outcome = test_handler.test_gradle(context, test, self.env)
                 test_outcomes.append(outcome)
 
@@ -105,9 +117,13 @@ class VUL4J(JavaBenchmark):
         self.env["GRADLE_USER_HOME"] = "/nexus/.gradle"
 
         manifest = context.project.get_version(sha=context.instance.sha)
+        for k, v in manifest.vulns.items():
+            vid = k
+            break
+
         checkout_dir = context.root.resolve() / context.project.name
         cmd_data = CommandData(args=f"vul4j test -d {checkout_dir} -b {batch_type}", cwd=str(context.root.resolve() / context.project.name), env=self.env)
-        super().__call__(cmd_data=cmd_data, msg=f"Test the {batch_type} of {manifest.vuln.id}\n", raise_err=True)
+        super().__call__(cmd_data=cmd_data, msg=f"Test the {batch_type} of {vid}\n", raise_err=True)
         test_results = json.loads(cmd_data.output)
         failures = test_results["tests"]["failures"]
         passing_tests = test_results["tests"]["passing_tests"]
